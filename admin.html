@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <div id="notifications"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('newOrder', function(order) {
+            const notificationsDiv = document.getElementById('notifications');
+            const orderDiv = document.createElement('div');
+            orderDiv.classList.add('notification');
+            orderDiv.innerHTML = `
+                <p><strong>Name:</strong> ${order.name}</p>
+                <p><strong>Email:</strong> ${order.email}</p>
+                <p><strong>Product:</strong> ${order.product}</p>
+            `;
+            notificationsDiv.prepend(orderDiv);
+        });
+    </script>
+</body>
+</html>
